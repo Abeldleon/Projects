@@ -3,13 +3,13 @@
 using namespace std;
 
 // Recursive solution
-/*
-int factorial(int n) {
-	if (n == 0) return 1;
-	return factorial(n - 1) * n;
-}*/
 
-// Dynamic Programming solution
+//int factorial(int n) {
+//	if (n == 0) return 1;
+//	return factorial(n - 1) * n;
+//}
+
+//Dynamic Programming solution
 int factorial(int n, vector<int>& memo) {
 
 	if (n == 0) return 1;
