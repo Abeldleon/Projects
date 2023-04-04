@@ -25,11 +25,12 @@ void allocate3(int*& p1, int*& p2, int*& p3)
 
 		throw;
 	}
-
+	delete p1;
+	delete p2;
+	delete p3;
 	p1 = temp1;
 	p2 = temp2;
 	p3 = temp3;
-
 	temp1 = nullptr;
 	temp2 = nullptr;
 	temp3 = nullptr;
