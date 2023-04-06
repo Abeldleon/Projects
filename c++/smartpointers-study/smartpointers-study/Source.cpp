@@ -29,7 +29,7 @@ struct cs30 {
 };
 int main() {
 	shared_ptr<cs30> sp1 = make_shared<cs30>(); // a
-	shared_ptr<cs30> sp2 = sp1; // b
+	shared_ptr<cs30> sp2(sp1); // b
 	cout << "Enter the section : ";
 	cin >> sp1->section; // c
 	cout << "Enter the number of students: ";

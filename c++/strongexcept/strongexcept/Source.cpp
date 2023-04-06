@@ -3,9 +3,9 @@
 using namespace std;
 void allocate3(int*& p1, int*& p2, int*& p3)
 {
-	int* temp1 = nullptr;
-	int* temp2 = nullptr;
-	int* temp3 = nullptr;
+	int* temp1;
+	int* temp2;
+	int* temp3;
 
 	try {
 		temp1 = new int(0);
@@ -13,15 +13,9 @@ void allocate3(int*& p1, int*& p2, int*& p3)
 		temp3 = new int(0);
 	}
 	catch (bad_alloc) {
-		if (temp1 != nullptr) {
-			delete temp1;
-		}
-		if (temp2 != nullptr) {
-			delete temp2;
-		}
-		if (temp3 != nullptr) {
-			delete temp3;
-		}
+		delete temp1;
+		delete temp2;
+		delete temp3;
 
 		throw;
 	}

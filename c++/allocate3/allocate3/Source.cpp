@@ -2,25 +2,24 @@
 #include <stdexcept>
 using namespace std;
 void allocate3(int*& p1, int*& p2, int*& p3) {
-	int* temp1 = nullptr;
-	int* temp2 = nullptr;
-	int* temp3 = nullptr;
-
+	int* temp1 = new int(0);
+	int* temp2{}, * temp3{};
 	try {
-		temp1 = new int(0);
 		temp2 = new int(0);
-		temp3 = new int(0);
 	}
 	catch (bad_alloc) {
 		delete temp1;
-		delete temp2;
-		delete temp3;
 		throw;
 	}
 
-	delete p1;
-	delete p2;
-	delete p3;
+	try {
+		temp3 = new int(0);
+	}
+	catch (bad_alloc) {
+		delete temp1, temp2;
+		throw;
+	}
+	delete p1, p2, p3;
 	p1 = temp1;
 	p2 = temp2;
 	p3 = temp3;
