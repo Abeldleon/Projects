@@ -1,0 +1,104 @@
+<script>
+    const io_error_messages = {
+  INVALID_INPUT: "Invalid input was supplied. Please try again.",
+  CANNOT_PARSE: "Input could not be parsed as a 64 bit floating point number. Please try again.",
+  SMALLER_UPPER_BOUND: "The upper bound cannot be smaller than the lower bound. Please try again.",
+  FLOAT_STEP_SIZE: "The amount of steps must be a whole number. Please try again.",
+  NEGATIVE_ZERO_STEP_SIZE: "The amount of steps cannot be zero or negative. Please try again.",
+  FLOAT_ROUND_PLACES: "The amount of places must be a whole number. Please try again.",
+  NEGATIVE_ZERO_ROUND_PLACES: "The amount of places cannot be zero or negative. Please try again.",
+  INVALID_DIFFERENTIAL_EXPRESSION: "Invalid expression"
+};
+
+function get_stdin() {
+  const readlineSync = require('readline-sync');
+  let input = readlineSync.question('');
+  if (!input) {
+    console.log(io_error_messages.INVALID_INPUT);
+    return null;
+  }
+  let result = parseFloat(input);
+  if (isNaN(result)) {
+    console.log(io_error_messages.CANNOT_PARSE);
+    return null;
+  }
+  return result;
+}
+
+function get_bounds() {
+  const bounds = {};
+  console.log(`Enter lower bound ${"a".italic()}:`);
+  bounds.lower = get_stdin();
+  console.log(`Enter upper bound ${"b".italic()}:`);
+  bounds.upper = get_stdin();
+  if (bounds.upper < bounds.lower) {
+    console.log(io_error_messages.SMALLER_UPPER_BOUND);
+    return null;
+  }
+  return bounds;
+}
+
+function get_steps() {
+  console.log(`Enter the amount of steps ${"N".italic()}:`);
+  let steps = get_stdin();
+  if (steps % 1 !== 0) {
+    console.log(io_error_messages.FLOAT_STEP_SIZE);
+    return null;
+  }
+  if (steps <= 0) {
+    console.log(io_error_messages.NEGATIVE_ZERO_STEP_SIZE);
+    return null;
+  }
+  return steps;
+}
+
+function round_to(number, decimal_places) {
+  let power = Math.pow(10, decimal_places);
+  return Math.round(number * power) / power;
+}
+
+function get_round_places() {
+  console.log("Enter the amount of decimal places should the step size be rounded to:");
+  let round_places = get_stdin();
+  if (round_places % 1 !== 0) {
+    console.log(io_error_messages.FLOAT_ROUND_PLACES);
+    return null;
+  }
+  if (round_places <= 0) {
+    console.log(io_error_messages.NEGATIVE_ZERO_ROUND_PLACES);
+    return null;
+  }
+  return round_places;
+}
+
+function get_step_size(bounds, steps, round_places) {
+  let step_size = (bounds.upper - bounds.lower) / steps;
+  return round_to(step_size, round_places);
+}
+
+function get_differential_expression() {
+  const meval = require('meval');
+  console.log("Enter the differential expression to approximate:");
+  let differential_expression;
+  try {
+    differential_expression = meval(get_stdin());
+  } catch (error) {
+    console.log(io_error_messages.INVALID_DIFFERENTIAL_EXPRESSION);
+    return null;
+  }
+  return differential_expression;
+}
+
+function get_initial_value() {
+  console.log(`Enter the initial value for the function at ${"a".italic()}:`);
+  let initial_value = get_stdin();
+  return initial_value;
+}
+
+function compute_eulers_method() {
+  const bounds = get_bounds();
+  if (!bounds) return;
+  const steps = get_steps();
+  if (!steps)
+
+</script>
