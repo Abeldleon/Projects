@@ -6,7 +6,7 @@ public:
 template <typename T>
 class smart_ptr {
 public:
-    smart_ptr():ptr_(nullptr), ref_(nullptr) {}
+    smart_ptr()noexcept :ptr_(nullptr), ref_(nullptr) {}
     // Create a smart_ptr that is initialized to nullptr. The reference count
     // should be initialized to nullptr.
 
@@ -59,7 +59,7 @@ public:
     // This assignment should make a shallow copy of the right-hand side's
     // pointer data. The reference count should be incremented as appropriate.
 
-    smart_ptr& operator=(smart_ptr&& rhs)noexcept {
+    smart_ptr& operator=(smart_ptr&& rhs) noexcept {
         if (this != &rhs) {
             if (ref_ != nullptr) {
                 (*ref_)--;
@@ -79,7 +79,7 @@ public:
     }
     // This move assignment should steal the right-hand side's pointer data.
 
-    bool clone() {
+    bool clone() noexcept {
         if (ref_ && (*ref_) > 1) {
             T* new_ptr = new T(*ptr_);
 
@@ -104,7 +104,7 @@ public:
     // object will be created. This new copy will be the object that this
     // smart_ptr points and its reference count will be one. 
 
-    int ref_count() const {
+    int ref_count() noexcept const {
         if (ref_ != nullptr) {
             return *ref_;
         }
@@ -132,7 +132,7 @@ public:
     // The arrow operator shall return the pointer ptr_. Throws null_ptr_exception
     // on invalid access.
 
-    ~smart_ptr(){
+    ~smart_ptr() noexcept {
         if (ref_ != nullptr) {
             (*ref_)--;
             if (*ref_ == 0) {
